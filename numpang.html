@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>APLIKASI KOCOKAN ARISAN (TMJ14PNJ)</title>
+        <style>
+          .utama {
+              width: 500px;
+              height: auto;
+              padding: 50px;
+              background-color: #77FFFF;
+              margin: auto; /*buat bikin div-nya jadi middle*/
+              margin-top: 100px;
+          }
+
+          .head {
+              text-align: center;
+              padding: 5px;
+              background-color: #FFFFFF;
+          }
+
+          .three-column {
+              width: 30%;
+              display: inline-block;
+          }
+
+          #checkDapet {
+              padding: 5px;
+              background-color: #AAFFFF;
+              text-align: center;
+          }
+
+          #tomvol {
+              display: block;
+              margin: auto;
+              background-color: white;
+              border: 2px solid yellow;
+              font-weight: bold;
+              text-align: center;
+              padding: 10px;
+          }
+
+          #tomvol:hover {
+              background-color: #007;
+              color: #FFF;
+          }
+
+          #tomvol:active {
+              background-color: #FFF;
+              color: #007;
+          }
+
+          #blah {
+              margin: auto;
+              text-align: center;
+              font-size: 50px;
+              font-weight: bold;
+          }
+
+          span {
+              color: #F00;
+          }
+        </style>
+    </head>
+    <body>
+        <div class="utama">
+            <div class="head">
+                <h1>APLIKASI KOCOKAN ARISAN</h1>
+                <h2>TMJ 2014 Reguler</h2>
+                <h3>Politeknik Negeri Jakarta</h3>
+            </div>
+            
+            <hr />
+            <div id="checkDapet">
+               <h4>YANG UDAH DAPET</h4>
+                <div class="three-column">
+                    <input type="checkbox" name="udahDapet" value="1" /> Afifah <br />
+                    <input type="checkbox" name="udahDapet" value="2" /> Astri <br />
+                    <input type="checkbox" name="udahDapet" value="3" /> Dhea <br />
+                    <input type="checkbox" name="udahDapet" value="4" /> Ghina <br />
+                    <input type="checkbox" name="udahDapet" value="5" /> Laely <br />
+                </div>
+
+                <div class="three-column">
+                    <input type="checkbox" name="udahDapet" value="6" /> Mita <br />
+                    <input type="checkbox" name="udahDapet" value="7" /> Nabila <br />
+                    <input type="checkbox" name="udahDapet" value="8" /> Ratna <br />
+                    <input type="checkbox" name="udahDapet" value="9" /> Rizka <br />
+                    <input type="checkbox" name="udahDapet" value="10" /> Salma <br />
+                </div>
+
+                <div class="three-column">
+                    <input type="checkbox" name="udahDapet" value="11" /> Salwa <br />
+                    <input type="checkbox" name="udahDapet" value="12" /> Sulis <br />
+                    <input type="checkbox" name="udahDapet" value="13" /> Zira <br />
+                    <input type="checkbox" name="udahDapet" value="14" /> Upeh <br />
+                    <strong>##########</strong>
+                </div>
+            </div>
+            
+            <hr />
+            
+            <input type="button" id="tomvol" value="K O C O K" onClick="return winner()" />
+        </div>
+        
+        <div id="blah"></div>
+        <script>
+          /*
+              ALGORITMA :
+                  1. Checklist Nama yang udah dapet kocokan (yang di-checklist ga dapet lagi berarti)
+                      Nb. ambil value yang di-check biar bisa deteksi yang udahan
+                  2. pas button "KOCOK" di-klik, jalanin fungsi Kocok
+                      Nb. kalo nomor yang keluar yudah pernah dapet, kocok ulang/
+                  3. pake fungsi if-else atau searching buat nyari pemilik angka
+                  4. Output nama orang yang dapet
+          */
+          /*jslint node: true */
+          "use strict";
+
+          var i, j, fond, inputan, angkaKocokan, k, y, z;
+
+          function Orang(nama, urutan) {
+              this.nama = nama;
+              this.urutan = urutan;
+          } //constructor
+
+          var afifah = new Orang("Afifah Zahra", 1);
+
+          var person = [afifah];
+
+          person[1] = new Orang("Astri Nursyam", 2);
+          person[2] = new Orang("Dhea Zarrassita", 3);
+          person[3] = new Orang("Ghina Sekarsari Husanty", 4);
+          person[4] = new Orang("Laely Rachmawati", 5);
+          person[5] = new Orang("Mifta Fadya", 6);
+          person[6] = new Orang("Nabiilah Amaani", 7);
+          person[7] = new Orang("Ratna Juwita", 8);
+          person[8] = new Orang("Rizka Aristiyanti", 9);
+          person[9] = new Orang("Salma Adillasari", 10);
+          person[10] = new Orang("Salwa Raihanah", 11);
+          person[11] = new Orang("Sulistiyoningrum", 12);
+          person[12] = new Orang("Ta'zirah Marwan", 13);
+          person[13] = new Orang("Ulfah Nur Izzati", 14);
+
+          //===============================================================
+          var dapet = function () {
+              var a = 0,
+                  got = [],
+                  inputan = document.getElementsByName("udahDapet");
+              for (i = 0; i < inputan.length; i += 1) {
+                  if (inputan[i].checked) {
+                      got[a] = inputan[i].value;
+                      a += 1;
+                  }
+              }
+              
+              if (got.length === 0) {
+                  got[0] = 0;
+              }
+              else if (got.length === person.length) {
+                  got = [];
+                  got[0] = 0;
+              }
+              
+              //nyoba-nyoba
+              for (k = 0; k < got.length; k += 1) {
+                  document.getElementById("blah").innerHTML += got[k];
+              }
+          };
+          //===============================================================
+
+          function kocok() {
+              return Math.floor(Math.random() * 14) + 1;
+          }
+
+          var winner = function () {
+              var angkaKocokan = kocok(),
+                  a = 0,
+                  k = 0,
+                  got = [],
+                  inputan = document.getElementsByName("udahDapet");
+              //=========================================================
+              for (i = 0; i < inputan.length; i += 1) {
+                  if (inputan[i].checked) {
+                      got[a] = inputan[i].value;
+                      a += 1;
+                  }
+              }
+              //=========================================================
+              
+              //Kalo misal make while, allgonya gimana?
+              
+              //=========================================================
+              if (got.length !== 0) {
+                  while (k < got.length) {
+                      if (angkaKocokan === parseInt(got[k], 10)) {
+                          angkaKocokan = kocok();
+                          k = 0;
+                      } else {
+                          k += 1;
+                      }
+                  }
+              }
+              //=========================================================
+              
+              fond = false;
+              
+              while (!fond) {
+                  for (j = 0; j < person.length; j += 1) {
+                      if (angkaKocokan === person[j].urutan) {
+                          document.getElementById("blah").innerHTML = "SELAMAT! PEMENANG MINGGU INI ADALAH <span>" + person[j].nama.toUpperCase() + "</span> DENGAN NOMOR URUT <span>" + person[j].urutan + "</span>!";
+                          fond = true;
+                      }
+                  }
+              }      
+          };
+        </script>
+    </body>
+</html>
